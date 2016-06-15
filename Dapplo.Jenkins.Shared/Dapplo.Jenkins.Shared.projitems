@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <SharedGUID>99a5fe9b-e5cd-4fca-9df7-bd54dd524a1b</SharedGUID>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration">
+    <Import_RootNamespace>Dapplo.Jenkins</Import_RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Action.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Author.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\ChangeSet.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\ChangeSetItem.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\CrumbIssuer.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Culprit.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\DefaultParameterValue.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Job.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\JobDetails.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Overview.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\ParameterDefinition.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\Path.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\PrimaryView.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\View.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Entities\ViewDetails.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)JenkinsApi.cs" />
+  </ItemGroup>
+</Project>

@@ -26,7 +26,10 @@ namespace Dapplo.Jenkins
 		private string _user;
 		private string _apiToken;
 
-		public IHttpSettings JenkinsHttpSettings { get; set; }
+		/// <summary>
+		/// The IHttpSettings used for every request, made available so they can be modified
+		/// </summary>
+		public IHttpSettings JenkinsHttpSettings { get; private set; }
 
 		/// <summary>
 		///     Create the JenkinsApi object, here the HttpClient is configured
@@ -83,13 +86,14 @@ namespace Dapplo.Jenkins
 		/// <summary>
 		/// This retrieves the crumbIssuer, which makes it possible to start calling the API
 		/// </summary>
-		public async Task InitializeAsync(CancellationToken token = default(CancellationToken))
+		/// <param name="cancellationToken">CancellationToken</param>
+		public async Task InitializeAsync(CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (_crumbIssuer == null)
 			{
 				try {
 					_behaviour.MakeCurrent();
-					_crumbIssuer = await JenkinsBaseUri.AppendSegments("crumbIssuer", "api", "json").GetAsAsync<CrumbIssuer>(token).ConfigureAwait(false);
+					_crumbIssuer = await JenkinsBaseUri.AppendSegments("crumbIssuer", "api", "json").GetAsAsync<CrumbIssuer>(cancellationToken).ConfigureAwait(false);
 					Log.Info().WriteLine("Using crumb header for XSS prevention.");
 				}
 				catch (Exception ex)
@@ -103,62 +107,70 @@ namespace Dapplo.Jenkins
 		/// <summary>
 		/// Retrieve the Jenkins overview (jobs etc)
 		/// </summary>
+		/// <param name="cancellationToken">CancellationToken</param>
 		/// <returns>ProjectList</returns>
-		public async Task<Overview> GetOverviewAsync(CancellationToken token = default(CancellationToken))
+		public async Task<Overview> GetOverviewAsync(CancellationToken cancellationToken = default(CancellationToken))
 		{
 			_behaviour.MakeCurrent();
-			return await JenkinsBaseUri.AppendSegments("api", "json").GetAsAsync<Overview>(token).ConfigureAwait(false);
+			return await JenkinsBaseUri.AppendSegments("api", "json").GetAsAsync<Overview>(cancellationToken).ConfigureAwait(false);
 		}
 
 		/// <summary>
 		/// Delete the Jenkins job
 		/// </summary>
-		/// <param name="viewName">Name of the job to delete</param>
-		public async Task DeleteJobAsync(string jobName, CancellationToken token = default(CancellationToken))
+		/// <param name="jobName">Name of the job to delete</param>
+		/// <param name="cancellationToken">CancellationToken</param>
+		public async Task DeleteJobAsync(string jobName, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			_behaviour.MakeCurrent();
-			await JenkinsBaseUri.AppendSegments("job", jobName, "doDelete").PostAsync(token).ConfigureAwait(false);
+			await JenkinsBaseUri.AppendSegments("job", jobName, "doDelete").PostAsync(cancellationToken).ConfigureAwait(false);
 		}
 
 		/// <summary>
 		/// Delete the Jenkins View
 		/// </summary>
 		/// <param name="viewName">Name of the job to delete</param>
-		public async Task DeleteViewAsync(string viewName, CancellationToken token = default(CancellationToken))
+		/// <param name="cancellationToken">CancellationToken</param>
+		public async Task DeleteViewAsync(string viewName, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			_behaviour.MakeCurrent();
-			await JenkinsBaseUri.AppendSegments("view", viewName, "doDelete").PostAsync(token).ConfigureAwait(false);
+			await JenkinsBaseUri.AppendSegments("view", viewName, "doDelete").PostAsync(cancellationToken).ConfigureAwait(false);
 		}
 
 		/// <summary>
 		/// Retrieve the config.xml for a job
 		/// </summary>
+		/// <param name="jobName">Name of the job to get the config.xml for</param>
+		/// <param name="cancellationToken">CancellationToken</param>
 		/// <returns>config.xml</returns>
-		public async Task<XDocument> GetJobXMLAsync(string jobName, CancellationToken token = default(CancellationToken))
+		public async Task<XDocument> GetJobXMLAsync(string jobName, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			_behaviour.MakeCurrent();
-			return await JenkinsBaseUri.AppendSegments("job", jobName, "config.xml").GetAsAsync<XDocument>(token).ConfigureAwait(false);
+			return await JenkinsBaseUri.AppendSegments("job", jobName, "config.xml").GetAsAsync<XDocument>(cancellationToken).ConfigureAwait(false);
 		}
 
 		/// <summary>
 		/// Retrieve the config.xml for a view
 		/// </summary>
+		/// <param name="viewName">Name of the view to retrieve the config.xml for</param>
+		/// <param name="cancellationToken">CancellationToken</param>
 		/// <returns>config.xml</returns>
-		public async Task<XDocument> GetViewXMLAsync(string viewName, CancellationToken token = default(CancellationToken))
+		public async Task<XDocument> GetViewXMLAsync(string viewName, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			_behaviour.MakeCurrent();
-			return await JenkinsBaseUri.AppendSegments("view", viewName, "config.xml").GetAsAsync<XDocument>(token).ConfigureAwait(false);
+			return await JenkinsBaseUri.AppendSegments("view", viewName, "config.xml").GetAsAsync<XDocument>(cancellationToken).ConfigureAwait(false);
 		}
 
 		/// <summary>
 		/// Post the config.xml to create a new job
 		/// </summary>
-		/// <param name="viewName">Name of the job to create</param>
+		/// <param name="jobName">Name of the job to create</param>
 		/// <param name="xml">XDocument with config.xml for the job</param>
-		public async Task CreateJobAsync(string jobName, XDocument xml, CancellationToken token = default(CancellationToken))
+		/// <param name="cancellationToken">CancellationToken</param>
+		public async Task CreateJobAsync(string jobName, XDocument xml, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			_behaviour.MakeCurrent();
-			await JenkinsBaseUri.AppendSegments("createItem").ExtendQuery("name", jobName).PostAsync(xml, token).ConfigureAwait(false);
+			await JenkinsBaseUri.AppendSegments("createItem").ExtendQuery("name", jobName).PostAsync(xml, cancellationToken).ConfigureAwait(false);
 		}
 
 		/// <summary>
@@ -166,51 +178,57 @@ namespace Dapplo.Jenkins
 		/// </summary>
 		/// <param name="viewName">Name of the view to create</param>
 		/// <param name="xml">XDocument with config.xml for the view</param>
-		public async Task CreateViewAsync(string viewName, XDocument xml, CancellationToken token = default(CancellationToken))
+		/// <param name="cancellationToken">CancellationToken</param>
+		public async Task CreateViewAsync(string viewName, XDocument xml, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			_behaviour.MakeCurrent();
-			await JenkinsBaseUri.AppendSegments("createView").ExtendQuery("name", viewName).PostAsync(xml, token).ConfigureAwait(false);
+			await JenkinsBaseUri.AppendSegments("createView").ExtendQuery("name", viewName).PostAsync(xml, cancellationToken).ConfigureAwait(false);
 		}
 
 		/// <summary>
 		/// Retrieve the details for a job 
 		/// </summary>
 		/// <param name="jobName">Name of the job</param>
+		/// <param name="cancellationToken">CancellationToken</param>
 		/// <returns>JobDetails</returns>
-		public async Task<JobDetails> GetJobDetailsAsync(string jobName, CancellationToken token = default(CancellationToken))
+		public async Task<JobDetails> GetJobDetailsAsync(string jobName, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			_behaviour.MakeCurrent();
-			return await JenkinsBaseUri.AppendSegments("job", jobName, "api","json").GetAsAsync<JobDetails>(token).ConfigureAwait(false);
+			return await JenkinsBaseUri.AppendSegments("job", jobName, "api","json").GetAsAsync<JobDetails>(cancellationToken).ConfigureAwait(false);
 		}
 
 		/// <summary>
 		/// Retrieve the details for a view
 		/// </summary>
+		/// <param name="viewName">Name of the view to get the details for</param>
+		/// <param name="cancellationToken">CancellationToken</param>
 		/// <returns>ViewDetails</returns>
-		public async Task<ViewDetails> GetViewDetailsAsync(string viewName, CancellationToken token = default(CancellationToken))
+		public async Task<ViewDetails> GetViewDetailsAsync(string viewName, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			_behaviour.MakeCurrent();
-			return await JenkinsBaseUri.AppendSegments("view", viewName, "api", "json").GetAsAsync<ViewDetails>(token).ConfigureAwait(false);
+			return await JenkinsBaseUri.AppendSegments("view", viewName, "api", "json").GetAsAsync<ViewDetails>(cancellationToken).ConfigureAwait(false);
 		}
 
 		/// <summary>
 		/// Enable a job
 		/// </summary>
-		/// <param name="viewName">Name of the job to enable</param>
-		public async Task EnableJobAsync(string jobName, CancellationToken token = default(CancellationToken))
+		/// <param name="jobName">Name of the job to enable</param>
+		/// <param name="cancellationToken">CancellationToken</param>
+		public async Task EnableJobAsync(string jobName, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			_behaviour.MakeCurrent();
-			await JenkinsBaseUri.AppendSegments("job", jobName, "enable").PostAsync(token).ConfigureAwait(false);
+			await JenkinsBaseUri.AppendSegments("job", jobName, "enable").PostAsync(cancellationToken).ConfigureAwait(false);
 		}
 
 		/// <summary>
 		/// Diable a job
 		/// </summary>
-		/// <param name="viewName">Name of the job to disable</param>
-		public async Task DisableJobAsync(string jobName, CancellationToken token = default(CancellationToken))
+		/// <param name="jobName">Name of the job to disable</param>
+		/// <param name="cancellationToken">CancellationToken</param>
+		public async Task DisableJobAsync(string jobName, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			_behaviour.MakeCurrent();
-			await JenkinsBaseUri.AppendSegments("job", jobName, "disable").PostAsync(token).ConfigureAwait(false);
+			await JenkinsBaseUri.AppendSegments("job", jobName, "disable").PostAsync(cancellationToken).ConfigureAwait(false);
 		}
 	}
 }

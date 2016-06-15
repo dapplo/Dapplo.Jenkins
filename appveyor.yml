@@ -25,7 +25,7 @@ after_test:
     - ps: .\CreateCoverage.ps1
 environment:
   COVERALLS_REPO_TOKEN:
-    secure: 7WKQnyTUvZhaCOIVI2+CmP/1tV9nJNHgZ6VJFa3lhxD81O9sJGp65DA/uG4sRyG9
+    secure: RyaJ7I4jGcnKusgJBM/uQxB751rVtAoAp88nrhlF9dP421w3eF30rJdj3ze0LzqN
   jenkins_test_uri: https://jenkins.ci.cloudbees.com
 build:
   project: Dapplo.Jenkins.sln

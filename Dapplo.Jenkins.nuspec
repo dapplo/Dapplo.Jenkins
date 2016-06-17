@@ -29,9 +29,9 @@
 		</dependencies>
 	</metadata>
 	<files>
-		<file src="$id$\bin\release\$id$.pdb" target="lib\net452" />
-		<file src="$id$\bin\release\$id$.xml" target="lib\net452" />
-		<file src="$id$\bin\release\$id$.dll" target="lib\net452" />
+		<file src="$id$\bin\release\$id$.pdb" target="lib\net45" />
+		<file src="$id$\bin\release\$id$.xml" target="lib\net45" />
+		<file src="$id$\bin\release\$id$.dll" target="lib\net45" />
 
 		<file src="$id$.Portable\bin\release\$id$.pdb" target="lib\dnxcore50" />
 		<file src="$id$.Portable\bin\release\$id$.xml" target="lib\dnxcore50" />

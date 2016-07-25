@@ -1,5 +1,5 @@
 ﻿using Dapplo.Log.XUnit;
-using Dapplo.LogFacade;
+using Dapplo.Log.Facade;
 using System;
 using System.Threading.Tasks;
 using Xunit;
@@ -14,7 +14,7 @@ namespace Dapplo.Jenkins.Tests
 
 		public JenkinsTests(ITestOutputHelper testOutputHelper)
 		{
-			XUnitLogger.RegisterLogger(testOutputHelper, LogLevels.Verbose);
+			LogSettings.RegisterDefaultLogger<XUnitLogger>(LogLevels.Verbose, testOutputHelper);
 			var testUri = new Uri(Environment.GetEnvironmentVariable("jenkins_test_uri"));
 			_jenkinsApi = new JenkinsApi(testUri);
 			var username = Environment.GetEnvironmentVariable("jenkins_test_username");

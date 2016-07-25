@@ -1,10 +1,39 @@
-﻿using Dapplo.HttpExtensions;
-using Dapplo.Jenkins.Entities;
-using Dapplo.LogFacade;
+﻿#region Dapplo 2016 - GNU Lesser General Public License
+
+// Dapplo - building blocks for .NET applications
+// Copyright (C) 2016 Dapplo
+// 
+// For more information see: http://dapplo.net/
+// Dapplo repositories are hosted on GitHub: https://github.com/dapplo
+// 
+// This file is part of Dapplo.Jenkins
+// 
+// Dapplo.Jenkins is free software: you can redistribute it and/or modify
+// it under the terms of the GNU Lesser General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+// 
+// Dapplo.Jenkins is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU Lesser General Public License for more details.
+// 
+// You should have a copy of the GNU Lesser General Public License
+// along with Dapplo.Jenkins. If not, see <http://www.gnu.org/licenses/lgpl.txt>.
+
+#endregion
+
+#region Usings
+
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using Dapplo.HttpExtensions;
+using Dapplo.Jenkins.Entities;
+using Dapplo.Log.Facade;
+
+#endregion
 
 namespace Dapplo.Jenkins
 {
@@ -21,15 +50,11 @@ namespace Dapplo.Jenkins
 		/// </summary>
 		private readonly IHttpBehaviour _behaviour;
 
+		private string _apiToken;
+
 		private CrumbIssuer _crumbIssuer;
 
 		private string _user;
-		private string _apiToken;
-
-		/// <summary>
-		/// The IHttpSettings used for every request, made available so they can be modified
-		/// </summary>
-		public IHttpSettings JenkinsHttpSettings { get; private set; }
 
 		/// <summary>
 		///     Create the JenkinsApi object, here the HttpClient is configured
@@ -65,6 +90,11 @@ namespace Dapplo.Jenkins
 			};
 		}
 
+		/// <summary>
+		///     The IHttpSettings used for every request, made available so they can be modified
+		/// </summary>
+		public IHttpSettings JenkinsHttpSettings { get; }
+
 
 		/// <summary>
 		///     The base URI for your JIRA server
@@ -84,14 +114,15 @@ namespace Dapplo.Jenkins
 
 
 		/// <summary>
-		/// This retrieves the crumbIssuer, which makes it possible to start calling the API
+		///     This retrieves the crumbIssuer, which makes it possible to start calling the API
 		/// </summary>
 		/// <param name="cancellationToken">CancellationToken</param>
 		public async Task InitializeAsync(CancellationToken cancellationToken = default(CancellationToken))
 		{
 			if (_crumbIssuer == null)
 			{
-				try {
+				try
+				{
 					_behaviour.MakeCurrent();
 					_crumbIssuer = await JenkinsBaseUri.AppendSegments("crumbIssuer", "api", "json").GetAsAsync<CrumbIssuer>(cancellationToken).ConfigureAwait(false);
 					Log.Info().WriteLine("Using crumb header for XSS prevention.");
@@ -105,7 +136,7 @@ namespace Dapplo.Jenkins
 		}
 
 		/// <summary>
-		/// Retrieve the Jenkins overview (jobs etc)
+		///     Retrieve the Jenkins overview (jobs etc)
 		/// </summary>
 		/// <param name="cancellationToken">CancellationToken</param>
 		/// <returns>ProjectList</returns>
@@ -116,7 +147,7 @@ namespace Dapplo.Jenkins
 		}
 
 		/// <summary>
-		/// Delete the Jenkins job
+		///     Delete the Jenkins job
 		/// </summary>
 		/// <param name="jobName">Name of the job to delete</param>
 		/// <param name="cancellationToken">CancellationToken</param>
@@ -127,7 +158,7 @@ namespace Dapplo.Jenkins
 		}
 
 		/// <summary>
-		/// Delete the Jenkins View
+		///     Delete the Jenkins View
 		/// </summary>
 		/// <param name="viewName">Name of the job to delete</param>
 		/// <param name="cancellationToken">CancellationToken</param>
@@ -138,7 +169,7 @@ namespace Dapplo.Jenkins
 		}
 
 		/// <summary>
-		/// Retrieve the config.xml for a job
+		///     Retrieve the config.xml for a job
 		/// </summary>
 		/// <param name="jobName">Name of the job to get the config.xml for</param>
 		/// <param name="cancellationToken">CancellationToken</param>
@@ -150,7 +181,7 @@ namespace Dapplo.Jenkins
 		}
 
 		/// <summary>
-		/// Retrieve the config.xml for a view
+		///     Retrieve the config.xml for a view
 		/// </summary>
 		/// <param name="viewName">Name of the view to retrieve the config.xml for</param>
 		/// <param name="cancellationToken">CancellationToken</param>
@@ -162,7 +193,7 @@ namespace Dapplo.Jenkins
 		}
 
 		/// <summary>
-		/// Post the config.xml to create a new job
+		///     Post the config.xml to create a new job
 		/// </summary>
 		/// <param name="jobName">Name of the job to create</param>
 		/// <param name="xml">XDocument with config.xml for the job</param>
@@ -174,7 +205,7 @@ namespace Dapplo.Jenkins
 		}
 
 		/// <summary>
-		/// Post the config.xml to create a new job
+		///     Post the config.xml to create a new job
 		/// </summary>
 		/// <param name="viewName">Name of the view to create</param>
 		/// <param name="xml">XDocument with config.xml for the view</param>
@@ -186,7 +217,7 @@ namespace Dapplo.Jenkins
 		}
 
 		/// <summary>
-		/// Retrieve the details for a job 
+		///     Retrieve the details for a job
 		/// </summary>
 		/// <param name="jobName">Name of the job</param>
 		/// <param name="cancellationToken">CancellationToken</param>
@@ -194,11 +225,11 @@ namespace Dapplo.Jenkins
 		public async Task<JobDetails> GetJobDetailsAsync(string jobName, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			_behaviour.MakeCurrent();
-			return await JenkinsBaseUri.AppendSegments("job", jobName, "api","json").GetAsAsync<JobDetails>(cancellationToken).ConfigureAwait(false);
+			return await JenkinsBaseUri.AppendSegments("job", jobName, "api", "json").GetAsAsync<JobDetails>(cancellationToken).ConfigureAwait(false);
 		}
 
 		/// <summary>
-		/// Retrieve the details for a view
+		///     Retrieve the details for a view
 		/// </summary>
 		/// <param name="viewName">Name of the view to get the details for</param>
 		/// <param name="cancellationToken">CancellationToken</param>
@@ -210,7 +241,7 @@ namespace Dapplo.Jenkins
 		}
 
 		/// <summary>
-		/// Enable a job
+		///     Enable a job
 		/// </summary>
 		/// <param name="jobName">Name of the job to enable</param>
 		/// <param name="cancellationToken">CancellationToken</param>
@@ -221,7 +252,7 @@ namespace Dapplo.Jenkins
 		}
 
 		/// <summary>
-		/// Diable a job
+		///     Diable a job
 		/// </summary>
 		/// <param name="jobName">Name of the job to disable</param>
 		/// <param name="cancellationToken">CancellationToken</param>

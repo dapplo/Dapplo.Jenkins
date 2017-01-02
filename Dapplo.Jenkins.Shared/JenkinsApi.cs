@@ -31,7 +31,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Dapplo.HttpExtensions;
 using Dapplo.Jenkins.Entities;
-using Dapplo.Log.Facade;
+using Dapplo.Log;
 
 #endregion
 
@@ -154,7 +154,7 @@ namespace Dapplo.Jenkins
 		public async Task DeleteJobAsync(string jobName, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			_behaviour.MakeCurrent();
-			await JenkinsBaseUri.AppendSegments("job", jobName, "doDelete").PostAsync(cancellationToken).ConfigureAwait(false);
+			await JenkinsBaseUri.AppendSegments("job", jobName, "doDelete").PostAsync(null, cancellationToken).ConfigureAwait(false);
 		}
 
 		/// <summary>
@@ -165,7 +165,7 @@ namespace Dapplo.Jenkins
 		public async Task DeleteViewAsync(string viewName, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			_behaviour.MakeCurrent();
-			await JenkinsBaseUri.AppendSegments("view", viewName, "doDelete").PostAsync(cancellationToken).ConfigureAwait(false);
+			await JenkinsBaseUri.AppendSegments("view", viewName, "doDelete").PostAsync(null, cancellationToken).ConfigureAwait(false);
 		}
 
 		/// <summary>
@@ -174,7 +174,7 @@ namespace Dapplo.Jenkins
 		/// <param name="jobName">Name of the job to get the config.xml for</param>
 		/// <param name="cancellationToken">CancellationToken</param>
 		/// <returns>config.xml</returns>
-		public async Task<XDocument> GetJobXMLAsync(string jobName, CancellationToken cancellationToken = default(CancellationToken))
+		public async Task<XDocument> GetJobXmlAsync(string jobName, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			_behaviour.MakeCurrent();
 			return await JenkinsBaseUri.AppendSegments("job", jobName, "config.xml").GetAsAsync<XDocument>(cancellationToken).ConfigureAwait(false);
@@ -186,7 +186,7 @@ namespace Dapplo.Jenkins
 		/// <param name="viewName">Name of the view to retrieve the config.xml for</param>
 		/// <param name="cancellationToken">CancellationToken</param>
 		/// <returns>config.xml</returns>
-		public async Task<XDocument> GetViewXMLAsync(string viewName, CancellationToken cancellationToken = default(CancellationToken))
+		public async Task<XDocument> GetViewXmlAsync(string viewName, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			_behaviour.MakeCurrent();
 			return await JenkinsBaseUri.AppendSegments("view", viewName, "config.xml").GetAsAsync<XDocument>(cancellationToken).ConfigureAwait(false);
@@ -248,7 +248,7 @@ namespace Dapplo.Jenkins
 		public async Task EnableJobAsync(string jobName, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			_behaviour.MakeCurrent();
-			await JenkinsBaseUri.AppendSegments("job", jobName, "enable").PostAsync(cancellationToken).ConfigureAwait(false);
+			await JenkinsBaseUri.AppendSegments("job", jobName, "enable").PostAsync(null, cancellationToken).ConfigureAwait(false);
 		}
 
 		/// <summary>
@@ -259,7 +259,7 @@ namespace Dapplo.Jenkins
 		public async Task DisableJobAsync(string jobName, CancellationToken cancellationToken = default(CancellationToken))
 		{
 			_behaviour.MakeCurrent();
-			await JenkinsBaseUri.AppendSegments("job", jobName, "disable").PostAsync(cancellationToken).ConfigureAwait(false);
+			await JenkinsBaseUri.AppendSegments("job", jobName, "disable").PostAsync(null, cancellationToken).ConfigureAwait(false);
 		}
 	}
 }

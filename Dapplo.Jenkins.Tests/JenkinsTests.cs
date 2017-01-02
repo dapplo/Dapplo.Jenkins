@@ -1,5 +1,5 @@
 ﻿using Dapplo.Log.XUnit;
-using Dapplo.Log.Facade;
+using Dapplo.Log;
 using System;
 using System.Threading.Tasks;
 using Xunit;

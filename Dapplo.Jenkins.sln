@@ -3,17 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Jenkins", "Dapplo.Jenkins\Dapplo.Jenkins.csproj", "{8DCD9A4C-A61A-45D2-ABFD-C38C62E2DFF0}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Dapplo.Jenkins", "Dapplo.Jenkins\Dapplo.Jenkins.xproj", "{8DCD9A4C-A61A-45D2-ABFD-C38C62E2DFF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dapplo.Jenkins.Tests", "Dapplo.Jenkins.Tests\Dapplo.Jenkins.Tests.csproj", "{E6BAEB10-3D66-4F3A-8966-5A3AE9EA9BCE}"
-EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "Dapplo.Jenkins.Shared", "Dapplo.Jenkins.Shared\Dapplo.Jenkins.Shared.shproj", "{99A5FE9B-E5CD-4FCA-9DF7-BD54DD524A1B}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Dapplo.Jenkins.Tests", "Dapplo.Jenkins.Tests\Dapplo.Jenkins.Tests.xproj", "{E6BAEB10-3D66-4F3A-8966-5A3AE9EA9BCE}"
 EndProject
 Global
-	GlobalSection(SharedMSBuildProjectFiles) = preSolution
-		Dapplo.Jenkins.Shared\Dapplo.Jenkins.Shared.projitems*{8dcd9a4c-a61a-45d2-abfd-c38c62e2dff0}*SharedItemsImports = 4
-		Dapplo.Jenkins.Shared\Dapplo.Jenkins.Shared.projitems*{99a5fe9b-e5cd-4fca-9df7-bd54dd524a1b}*SharedItemsImports = 13
-	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|AnyCPU = Debug|AnyCPU
 		Release|AnyCPU = Release|AnyCPU

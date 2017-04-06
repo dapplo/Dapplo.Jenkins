@@ -1,7 +1,7 @@
-﻿#region Dapplo 2016 - GNU Lesser General Public License
+﻿#region Dapplo 2017 - GNU Lesser General Public License
 
 // Dapplo - building blocks for .NET applications
-// Copyright (C) 2016 Dapplo
+// Copyright (C) 2016-2017 Dapplo
 // 
 // For more information see: http://dapplo.net/
 // Dapplo repositories are hosted on GitHub: https://github.com/dapplo
@@ -23,22 +23,12 @@
 
 #endregion
 
-#region Usings
-
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-
-#endregion
-
-namespace Dapplo.Jenkins.Entities
+namespace Dapplo.Jenkins
 {
-	[DataContract]
-	public class ParameterDefinition
-	{
-		public DefaultParameterValue defaultParameterValue { get; set; }
-		public string description { get; set; }
-		public string name { get; set; }
-		public string type { get; set; }
-		public List<string> choices { get; set; }
-	}
+    /// <summary>
+    ///     This interface describes the functionality of the IJenkinsClient which domains can use
+    /// </summary>
+    public interface IJenkinsDomain : IJenkinsClient
+    {
+    }
 }

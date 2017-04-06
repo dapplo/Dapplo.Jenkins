@@ -1,4 +1,4 @@
-version: 0.1.{build}
+version: 0.2.{build}
 skip_tags: true
 configuration: Release
 platform: AnyCPU
@@ -6,34 +6,31 @@ clone_depth: 2
 branches:
   only:
   - master
-assembly_info:
-  patch: true
-  file: '**\AssemblyInfo.*'
-  assembly_version: '{version}'
-  assembly_file_version: '{version}'
-  assembly_informational_version: '{version}'
 install:
-  - choco install gitlink -y
+- choco install gitlink -y
 before_build:
-  - nuget restore
-  - ps: if(-not $env:APPVEYOR_PULL_REQUEST_NUMBER) { $env:is_not_pr = "true"; }
+- ps: .\SetVersion.ps1
+- appveyor-retry dotnet restore -v Minimal
+- ps: if(-not $env:APPVEYOR_PULL_REQUEST_NUMBER) { $env:is_not_pr = "true"; }
 before_package:
-  - ps: Remove-Item packages\OpenCover* -include ("*.pdb", "*.sln", "*.csproj") -recurse
-  - GitLink .\
-  - nuget pack -Verbosity detailed "%APPVEYOR_PROJECT_NAME%.nuspec" -MSBuildVersion 14.0 -Properties id=%APPVEYOR_PROJECT_NAME%;version=%APPVEYOR_BUILD_VERSION%;author=Dapplo
-after_test:
-    - ps: .\CreateCoverage.ps1
+- ps: if(-not $env:APPVEYOR_PULL_REQUEST_NUMBER) { GitLink .\ }
+after_test: 
+- ps: .\CreateCoverage.ps1
 environment:
   COVERALLS_REPO_TOKEN:
-    secure: RyaJ7I4jGcnKusgJBM/uQxB751rVtAoAp88nrhlF9dP421w3eF30rJdj3ze0LzqN
-  jenkins_test_uri: https://jenkins.ci.cloudbees.com
+    secure: 7WKQnyTUvZhaCOIVI2+CmP/1tV9nJNHgZ6VJFa3lhxD81O9sJGp65DA/uG4sRyG9
+  jenkins_test_uri: https://jenkins.qa.ubuntu.com/
 build:
-  project: Dapplo.Jenkins.sln
   publish_nuget: true
-  publish_nuget_symbols: false
+  publish_nuget_symbols: true
   verbosity: minimal
+build_script:
+- dotnet build Dapplo.Jenkins -c %CONFIGURATION% --no-dependencies
+- dotnet build Dapplo.Jenkins.Tests -c %CONFIGURATION% --no-dependencies
+after_build:
+- dotnet pack Dapplo.Jenkins -c %CONFIGURATION% --no-build -o artifacts
 artifacts:
-- path: '*.nupkg'
+- path: artifacts\**\*.*
   name: NuGet package
 notifications:
 - provider: Email

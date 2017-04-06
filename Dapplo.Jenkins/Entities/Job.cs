@@ -1,7 +1,7 @@
-﻿#region Dapplo 2016 - GNU Lesser General Public License
+﻿#region Dapplo 2017 - GNU Lesser General Public License
 
 // Dapplo - building blocks for .NET applications
-// Copyright (C) 2016 Dapplo
+// Copyright (C) 2016-2017 Dapplo
 // 
 // For more information see: http://dapplo.net/
 // Dapplo repositories are hosted on GitHub: https://github.com/dapplo
@@ -31,15 +31,27 @@ using System.Runtime.Serialization;
 
 namespace Dapplo.Jenkins.Entities
 {
+	/// <summary>
+	/// The description of a job
+	/// </summary>
 	[DataContract]
 	public class Job
 	{
+		/// <summary>
+		/// Name for the job
+		/// </summary>
 		[DataMember(Name = "name", EmitDefaultValue = false)]
 		public string Name { get; set; }
 
+		/// <summary>
+		/// Url to the job
+		/// </summary>
 		[DataMember(Name = "url", EmitDefaultValue = false)]
 		public string Url { get; set; }
 
+		/// <summary>
+		/// Color of the job, which describes the current state
+		/// </summary>
 		[DataMember(Name = "color", EmitDefaultValue = false)]
 		public string Color { get; set; }
 	}

@@ -1,7 +1,7 @@
-﻿#region Dapplo 2016 - GNU Lesser General Public License
+﻿#region Dapplo 2017 - GNU Lesser General Public License
 
 // Dapplo - building blocks for .NET applications
-// Copyright (C) 2016 Dapplo
+// Copyright (C) 2016-2017 Dapplo
 // 
 // For more information see: http://dapplo.net/
 // Dapplo repositories are hosted on GitHub: https://github.com/dapplo
@@ -32,34 +32,16 @@ using System.Runtime.Serialization;
 
 namespace Dapplo.Jenkins.Entities
 {
+	/// <summary>
+	/// Possible action
+	/// </summary>
 	[DataContract]
-	public class ChangeSetItem
+	public class Action
 	{
-		[DataMember(Name = "affectedPaths", EmitDefaultValue = false)]
-		public IList<string> AffectedPaths { get; set; }
-
-		[DataMember(Name = "commitId", EmitDefaultValue = false)]
-		public string CommitId { get; set; }
-
-		[DataMember(Name = "timestamp", EmitDefaultValue = false)]
-		public int Timestamp { get; set; }
-
-		[DataMember(Name = "author", EmitDefaultValue = false)]
-		public Author Author { get; set; }
-
-		[DataMember(Name = "comment", EmitDefaultValue = false)]
-		public string Comment { get; set; }
-
-		[DataMember(Name = "date", EmitDefaultValue = false)]
-		public string Date { get; set; }
-
-		[DataMember(Name = "id", EmitDefaultValue = false)]
-		public string Id { get; set; }
-
-		[DataMember(Name = "msg", EmitDefaultValue = false)]
-		public string Msg { get; set; }
-
-		[DataMember(Name = "paths", EmitDefaultValue = false)]
-		public IList<Path> Paths { get; set; }
+		/// <summary>
+		/// Definition of the parameters in an action
+		/// </summary>
+		[DataMember(Name = "parameterDefinitions", EmitDefaultValue = false)]
+		public IList<ParameterDefinition> ParameterDefinitions { get; set; }
 	}
 }

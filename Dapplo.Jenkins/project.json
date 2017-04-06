@@ -1,0 +1,48 @@
+{
+	"version": "1.0.0-*",
+	"title": "Dapplo.Jenkins",
+	"authors": ["Robin Krom"],
+	"copyright": "Copyright © Dapplo 2016",
+	"description": "A library for accessing Jenkins from .NET",
+	"packOptions": {
+		"owners": ["Dapplo"],
+		"summary": "A library for accessing Jenkins from .NET",
+		"licenseUrl": "http://www.gnu.org/licenses/lgpl-3.0.en.html",
+		"projectUrl": "http://www.dapplo.net/blocks/Dapplo.Jenkins/",
+		"iconUrl": "http://www.dapplo.net/favicon.ico",
+		"tags": ["Jenkins", "dapplo"],
+		"requireLicenseAcceptance": false,
+		"repository": {
+			"type": "git",
+			"url": "https://github.com/dapplo/Dapplo.Jenkins"
+		}
+	},
+	"supports": {},
+    "dependencies": {
+        "Dapplo.HttpExtensions": "0.6.22",
+        "Dapplo.HttpExtensions.JsonSimple": "0.6.22"
+    },
+    "frameworks": {
+        "netstandard1.3": {
+            "dependencies": {
+                "Microsoft.NETCore.Portable.Compatibility": "1.0.1",
+                "NETStandard.Library": "1.6.1"
+            }
+        },
+        "net45": {
+            "frameworkAssemblies": {
+            },
+            "dependencies": {
+            }
+        },
+        "net46": {
+            "frameworkAssemblies": {
+            },
+            "dependencies": {
+            }
+        }
+    },
+    "buildOptions": {
+        "xmlDoc": true
+    }
+}

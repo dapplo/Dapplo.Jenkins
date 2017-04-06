@@ -1,7 +1,7 @@
-﻿#region Dapplo 2016 - GNU Lesser General Public License
+﻿#region Dapplo 2017 - GNU Lesser General Public License
 
 // Dapplo - building blocks for .NET applications
-// Copyright (C) 2016 Dapplo
+// Copyright (C) 2016-2017 Dapplo
 // 
 // For more information see: http://dapplo.net/
 // Dapplo repositories are hosted on GitHub: https://github.com/dapplo
@@ -25,17 +25,28 @@
 
 #region Usings
 
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 
 #endregion
 
 namespace Dapplo.Jenkins.Entities
 {
+	/// <summary>
+	/// The user
+	/// </summary>
 	[DataContract]
-	public class Action
+	public class User
 	{
-		[DataMember(Name = "parameterDefinitions", EmitDefaultValue = false)]
-		public IList<ParameterDefinition> ParameterDefinitions { get; set; }
+		/// <summary>
+		/// Uri to the user
+		/// </summary>
+		[DataMember(Name = "absoluteUrl", EmitDefaultValue = false)]
+		public string AbsoluteUrl { get; set; }
+
+		/// <summary>
+		/// Full name of the user
+		/// </summary>
+		[DataMember(Name = "fullName", EmitDefaultValue = false)]
+		public string FullName { get; set; }
 	}
 }

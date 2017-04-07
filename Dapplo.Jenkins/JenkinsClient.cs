@@ -31,9 +31,10 @@ using System.Threading;
 using System.Threading.Tasks;
 using Dapplo.HttpExtensions;
 using Dapplo.HttpExtensions.JsonSimple;
+using Dapplo.Jenkins.Domains;
 using Dapplo.Jenkins.Entities;
+using Dapplo.Jenkins.Internal;
 using Dapplo.Log;
-using Dapplo.Jenkins.Support;
 
 #endregion
 

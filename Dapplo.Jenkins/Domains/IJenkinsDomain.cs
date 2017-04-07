@@ -23,12 +23,12 @@
 
 #endregion
 
-namespace Dapplo.Jenkins
+namespace Dapplo.Jenkins.Domains
 {
     /// <summary>
-    ///     The marker interface for the job domain
+    ///     This interface describes the functionality of the IJenkinsClient which domains can use
     /// </summary>
-    public interface IJobDomain : IJenkinsDomain
+    public interface IJenkinsDomain : IJenkinsClient
     {
     }
 }

@@ -27,12 +27,12 @@ using System.Net;
 using Dapplo.HttpExtensions;
 using Dapplo.Log;
 
-namespace Dapplo.Jenkins.Support
+namespace Dapplo.Jenkins.Internal
 {
     /// <summary>
     /// Handle the HttpResponse object
     /// </summary>
-    public static class HttpResponseExtensions
+    internal static class HttpResponseExtensions
     {
         private static readonly LogSource Log = new LogSource();
 

@@ -23,7 +23,7 @@
 
 #endregion
 
-namespace Dapplo.Jenkins
+namespace Dapplo.Jenkins.Domains
 {
     /// <summary>
     ///     The marker interface for the View domain

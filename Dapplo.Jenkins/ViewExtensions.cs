@@ -28,8 +28,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using Dapplo.HttpExtensions;
+using Dapplo.Jenkins.Domains;
 using Dapplo.Jenkins.Entities;
-using Dapplo.Jenkins.Support;
+using Dapplo.Jenkins.Internal;
 using Dapplo.Log;
 
 namespace Dapplo.Jenkins

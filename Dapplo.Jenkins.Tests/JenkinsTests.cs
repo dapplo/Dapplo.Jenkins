@@ -41,7 +41,7 @@ namespace Dapplo.Jenkins.Tests
         public JenkinsTests(ITestOutputHelper testOutputHelper)
         {
             LogSettings.RegisterDefaultLogger<XUnitLogger>(LogLevels.Verbose, testOutputHelper);
-            var testUriString = Environment.GetEnvironmentVariable("jenkins_test_uri");
+            var testUriString = Environment.GetEnvironmentVariable("jenkins_test_uri") ?? "https://jenkins.qa.ubuntu.com/";
             if (string.IsNullOrEmpty(testUriString))
             {
                 throw  new ArgumentNullException("jenkins_test_uri");

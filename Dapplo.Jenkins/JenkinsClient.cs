@@ -71,11 +71,7 @@ namespace Dapplo.Jenkins
         /// <param name="httpSettings">IHttpSettings or null for default</param>
         private JenkinsClient(Uri baseUri, IHttpSettings httpSettings = null)
         {
-            if (baseUri == null)
-            {
-                throw new ArgumentNullException(nameof(baseUri));
-            }
-            JenkinsBaseUri = baseUri;
+            JenkinsBaseUri = baseUri ?? throw new ArgumentNullException(nameof(baseUri));
 
             Settings = httpSettings ?? HttpExtensionsGlobals.HttpSettings.ShallowClone();
             Settings.PreAuthenticate = true;
